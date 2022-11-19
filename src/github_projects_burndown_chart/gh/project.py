@@ -6,6 +6,7 @@ from config import config
 
 class Project:
     def __init__(self, project_data):
+        print(project_data)
         self.name = project_data['name']
         self.columns = self.__parse_columns(project_data)
 
