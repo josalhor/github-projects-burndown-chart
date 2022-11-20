@@ -14,7 +14,7 @@ class ProjectStats():
 
     @property
     def total_points(self) -> int:
-        return self.project.total_points
+        return self.project.total_points - ClosedPointsCalculator(self.project.cards).points_as_of(self.start_date)
 
     def points_by_date(self, calculator: PointsCalculator) -> Dict[datetime, int]:
         points = {}
@@ -30,7 +30,7 @@ class ProjectStats():
         points_by_date = self.points_by_date(calculator)
         today_23_59 = TODAY_UTC + timedelta(hours=23, minutes=59)
         return {
-            date: self.total_points - points_by_date[date]
+            date: self.project.total_points - points_by_date[date]
             if date <= today_23_59 else None
             for date in points_by_date
         }

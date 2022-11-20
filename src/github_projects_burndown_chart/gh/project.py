@@ -1,40 +1,28 @@
 from datetime import datetime
+from typing import List
 from dateutil.parser import isoparse
 
 from config import config
 
 
 class Project:
-    def __init__(self, project_data):
+    def __init__(self, project_data, name):
         print(project_data)
-        self.name = project_data['name']
-        self.columns = self.__parse_columns(project_data)
+        self.name = name
+        self._cards: List[Card] = self.__parse_cards(project_data)
 
-    def __parse_columns(self, project_data):
-        columns_data = project_data['columns']['nodes']
-        columns = [Column(column_data) for column_data in columns_data]
-        return columns
-
-    @property
-    def total_points(self):
-        return sum([column.get_total_points() for column in self.columns])
+    def __parse_cards(self, project_data):
+        card_data = project_data['items']['nodes']
+        cards = [Card(data) for data in card_data]
+        return cards
 
     @property
     def cards(self):
-        return [card for column in self.columns for card in column.cards]
+        return [card for card in self._cards]
 
-
-class Column:
-    def __init__(self, column_data):
-        self.cards = self.__parse_cards(column_data)
-
-    def __parse_cards(self, column_data):
-        cards_data = column_data['cards']['nodes']
-        cards = [Card(card_data) for card_data in cards_data]
-        return cards
-
-    def get_total_points(self):
-        return sum([card.points for card in self.cards])
+    @property
+    def total_points(self):
+        return sum([card.points for card in self._cards])
 
 
 class Card:

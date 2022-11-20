@@ -56,7 +56,6 @@ class Config:
             raise AttributeError('No project has been set.')
         if not hasattr(self, 'project_name'):
             raise AttributeError('No project has been set.')
-        print(self.raw_config)
         return self.raw_config[self.project_type][self.project_name][key]
 
     def __get_date(self, name: str) -> datetime:

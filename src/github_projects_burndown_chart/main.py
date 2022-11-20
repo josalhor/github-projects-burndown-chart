@@ -65,5 +65,5 @@ if __name__ == '__main__':
         burndown_chart.generate_chart(chart_path)
         webhook.post_burndown_chart(chart_path)
     else:
-        burndown_chart.render()
+        burndown_chart.generate_chart('./fig.png')
     print('Done')

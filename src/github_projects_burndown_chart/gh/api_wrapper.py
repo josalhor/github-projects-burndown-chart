@@ -21,9 +21,10 @@ __logger.addHandler(__ch)
 def get_repository_project() -> dict:
     query_variables = config['query_variables']
     query_response = gh_api_query(RepositoryProject, query_variables)
-    print('Question', RepositoryProject, query_variables, 'Reponse', query_response)
-    project_data = query_response['data']['repository']['project']
-    return Project(project_data)
+    print('Question', RepositoryProject, query_variables)
+    print('Response', query_response)
+    project_data = query_response['data']['user']['projectV2']
+    return Project(project_data, 'lo-mercat')
 
 
 def get_organization_project() -> dict:
@@ -35,6 +36,7 @@ def get_organization_project() -> dict:
 
 def gh_api_query(query: str, variables: dict) -> dict:
     response = __get_from_cache(query, variables)
+    response = None
     if not response:
         response = __get_from_api(query, variables)
         __cache_response(query, variables, response)

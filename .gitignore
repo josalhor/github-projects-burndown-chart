@@ -150,3 +150,5 @@ dmypy.json
 
 # Cython debug symbols
 cython_debug/
+
+/src/github_projects_burndown_chart/fig.png
